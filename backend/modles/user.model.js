@@ -40,14 +40,29 @@ userSchema.methods.generateAuthToken = ()=>{
     }, process.env.JWT_SECRET)
     return token;
 }
+userSchema.methods.comparePassword = async function (password) {
+    if (!this.password) {
+        throw new Error("Password hash is not available on this user object.");
+    }
+    return await bcrypt.compare(password, this.password);
+};
 
-userSchema.methods.comparePasswor = async (password)=>{
-     return await bcrypt.compare(password, this.password); 
-}
+userSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign(
+        { _id: this._id },
+        process.env.JWT_SECRET,
+     
+    );
+    return token;
+};
+
+
 
 userSchema.statics.hashPassword = async (password)=>{
     return await bcrypt.hash(password, 10);
 }
+
+
 
 const userModel = mongoose.model('user', userSchema);
 
