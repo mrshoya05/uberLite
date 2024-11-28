@@ -1,7 +1,7 @@
 const userModel = require('../modles/user.model');
 const userService = require('../services/user.services');
 const { validationResult} = require('express-validator')
-
+const blkackListToken = require('../modles/blackListTokenSchema');
 exports.register = async (req, res)=>{
    
    const error = validationResult(req);
@@ -84,4 +84,18 @@ try {
         message: "not found token "
     })
 }
+}
+
+
+//logout user 
+
+exports.logout = async (req, res)=>{
+  res.clearCookie('token');
+  const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+  
+  await blkackListToken.create({token});
+  
+  res.status(200).json({
+    message: "Logged out !"
+  })
 }
