@@ -3,4 +3,4 @@ A fully functional Uber clone built using the MERN (MongoDB, Express.js, React.j
 
 ### Routes 
 - data updated of routes 
-successfully completed user routes and controller 
+- successfully completed user routes and controller 
