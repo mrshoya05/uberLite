@@ -4,7 +4,7 @@ const captainSchema = require('../modles/captainSchema');
 module.exports.createCaptain = async ({
     firstname, lastname, email, password, color, plate, capacity, vehicleType
 })=>{
-    if(!firstname || !email || !password || !color || !plate || !capacity || !vehicletype){
+    if(!firstname || !email || !password || !color || !plate || !capacity || !vehicleType){
         throw new Error("All files required !");
     }
 
@@ -16,9 +16,13 @@ module.exports.createCaptain = async ({
         },
         email, 
         password , 
-        color,
-        capacity, 
-        vehicleType
+        vehicle: {
+            color,
+            plate,
+            capacity,
+            vehicleType
+        }
 
-    });
+    })
+    return captain;
 }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const jsw = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const captainSchema = new mongoose.Schema({
     fullname: {
         firstname: {
@@ -65,7 +65,7 @@ const captainSchema = new mongoose.Schema({
 });
 
 captainSchema.methods.generateAuthToken = ()=>{
-    const token = jwt.sign({_id: this._id}, process.env.JWS_SECRET, {expriesIn: '24h'});
+    const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET);
     return token;
 }
 

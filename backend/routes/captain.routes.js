@@ -3,6 +3,7 @@ const expres = require('express');
 const  router  = expres.Router();
 
  const { body  } = require('express-validator');
+const  {registerCaptain}  = require('../controllers/captain.controller');
 
 // register as router 
 router.post('/register', [
@@ -13,7 +14,7 @@ router.post('/register', [
     body('vehicle.plate').isLength({min: 3}).withMessage(" Invalid plate number !"),
     body('vehicle.capacity').isLength({min: 1}).withMessage("Invalid capacity !"),
     body('vehicle.vehicleType').isIn(['car', 'motorcycle', 'auto']).withMessage(' choose valid vehicleType !')
-])
+], registerCaptain)
 
 //captain routes 
 
