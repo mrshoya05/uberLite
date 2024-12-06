@@ -63,6 +63,7 @@ exports.login = async (req, res) => {
         }
 
         const token = user.generateAuthToken();
+        res.cookie('token', token);
         res.status(200).json({ token, user });
     } catch (error) {
         console.error("Error during login:", error);
@@ -77,7 +78,14 @@ exports.getUserProfile = async (req, res)=>{
 console.log("test");
 
 try {
-    res.status(201).json(req.user);
+    if (!req.user) {
+        return res.status(401).json({
+            message: "User not authenticated"
+        });
+    }
+    res.status(200).json({
+        user: req.user
+    });
 
 } catch (error) {
     res.status(401).json({

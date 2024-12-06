@@ -64,10 +64,11 @@ const captainSchema = new mongoose.Schema({
     }
 });
 
-captainSchema.methods.generateAuthToken = ()=>{
-    const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET);
+captainSchema.methods.generateAuthToken = function() {
+    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     return token;
-}
+};
+
 
 captainSchema.methods.comparePassword = async function (password) {
     if (!this.password) {
@@ -80,4 +81,6 @@ captainSchema.statics.hashPassword = async (password)=>{
     return await bcrypt.hash(password, 10);
 }
 
-module.exports = mongoose.model('Captain', captainSchema);
+const captainModel= mongoose.model('Captain', captainSchema);
+
+module.exports=captainModel;

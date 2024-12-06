@@ -3,7 +3,8 @@ const expres = require('express');
 const  router  = expres.Router();
 
  const { body  } = require('express-validator');
-const  {registerCaptain}  = require('../controllers/captain.controller');
+const  {registerCaptain, loginCaptain, getCaptainProfile, logoutCaptain}  = require('../controllers/captain.controller');
+const { authCaptain } = require('../middlewares/authMiddleware');
 
 // register as router 
 router.post('/register', [
@@ -18,4 +19,17 @@ router.post('/register', [
 
 //captain routes 
 
+router.post('/login', [
+    body('email').isEmail().withMessage("Invalid mail "),
+    body('password').isLength({min: 6}).withMessage("Password must be valid !")
+], 
+
+loginCaptain);
+
+
+router.get('/profile', authCaptain, getCaptainProfile)
+
+
+
+router.get('/logout', authCaptain, logoutCaptain)
 module.exports = router ; 

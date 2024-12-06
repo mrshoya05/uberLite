@@ -34,12 +34,7 @@ const userSchema = new mongoose.Schema(
     },
 )
 
-// userSchema.methods.generateAuthToken = ()=>{
-//     const token = jwt.sign({
-//         _id: this._id
-//     }, process.env.JWT_SECRET)
-//     return token;
-// }
+
 userSchema.methods.comparePassword = async function (password) {
     if (!this.password) {
         throw new Error("Password hash is not available on this user object.");
@@ -53,6 +48,7 @@ userSchema.methods.generateAuthToken = function () {
         process.env.JWT_SECRET,
      
     );
+
     return token;
 };
 
