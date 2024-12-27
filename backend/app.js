@@ -19,3 +19,5 @@ app.use('/api/user', userRoutes)
 app.use('/api/captain', router);
 
 module.exports = app;
+
+//env file is missing ! 
