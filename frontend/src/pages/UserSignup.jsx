@@ -1,14 +1,16 @@
 import React, { useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+//context script is missing 
 
-const UserSignup = () => {
+const UserSignup =  () => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ firstName, setFirstName ] = useState('')
   const [ lastName, setLastName ] = useState('')
 const [userData, setUserdata] = useState({})
 
-
+const navigate = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault()
     const newUser = {
@@ -20,6 +22,12 @@ const [userData, setUserdata] = useState({})
       password: password
     }
     setUserdata(newUser);
+
+    const response = await axios.post(`${import.meta.env.BASE_URL}/users/register`, newUser);
+    if(response.status === 201){
+      const data = response.data;
+      navigate('/login')
+    }
 
 
     setEmail('')
